@@ -52,6 +52,9 @@ void VCU_Init(void)
   
   /* Send initial disable message to ensure inverter is off */
   VCU_DisableInverter();
+
+  /* Send initial enable message to ensure inverter is on */
+  VCU_EnableInverter();
 }
 
 /**
