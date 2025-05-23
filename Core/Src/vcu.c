@@ -53,7 +53,7 @@ void VCU_Init(void)
   /* Send initial disable message to ensure inverter is off */
   VCU_DisableInverter();
 
-  /* Send initial enable message to ensure inverter is on */
+  //enable inverter
   VCU_EnableInverter();
 }
 
@@ -110,6 +110,9 @@ static void VCU_ProcessAnalogInputs(void)
     torqueCommand = (uint16_t)(((uint32_t)acceleratorRaw * TORQUE_MAX_VALUE) / ADC_MAX_VALUE);
   }
   
+  //test 150 torque
+  torqueCommand = 70;
+
   /* Send CAN message with torque command */
   VCU_TransmitCANMessage(torqueCommand, VCU_DIRECTION_FORWARD, VCU_INVERTER_ENABLE);
 }
@@ -168,7 +171,7 @@ void VCU_EnableInverter(void)
   vcuActive = 1;
   
   /* Send enable message with zero torque command */
-  VCU_TransmitCANMessage(0, VCU_DIRECTION_FORWARD, VCU_INVERTER_ENABLE);
+  VCU_TransmitCANMessage(0, VCU_DIRECTION_REVERSE, VCU_INVERTER_ENABLE);
   
   /* Visual indication - could toggle an LED here */
 }
@@ -183,7 +186,7 @@ void VCU_DisableInverter(void)
   vcuActive = 0;
   
   /* Send disable message with zero torque command */
-  VCU_TransmitCANMessage(0, VCU_DIRECTION_FORWARD, VCU_INVERTER_DISABLE);
+  VCU_TransmitCANMessage(0, VCU_DIRECTION_REVERSE, VCU_INVERTER_DISABLE);
   
   /* Visual indication - could toggle an LED here */
 }

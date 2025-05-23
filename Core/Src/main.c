@@ -140,6 +140,9 @@ int main(void)
   //initialize HAL CAN
   HAL_CAN_Start(&hcan1);
 
+  //count just for test just so loop will only run once
+  int count = 0;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -151,9 +154,16 @@ int main(void)
 	  /* USER CODE BEGIN 3 */
 
 	  /* Process VCU tasks */
-	  VCU_Process();
+	  if(count == 0) {
+		  VCU_Process();
 
-	  HAL_Delay(10);
+		  HAL_Delay(10000);
+
+		  VCU_DisableInverter();
+	  }
+
+	  count++;
+
   }
   /* USER CODE END 3 */
 }
